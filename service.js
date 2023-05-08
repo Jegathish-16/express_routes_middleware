@@ -24,27 +24,28 @@ serviceRouter.get('/',(request,response) =>{
     response.send('This is service page')
 })
 
-serviceRouter.get('/:id([0-9]{1})',(request,response) =>{
-    // const serId = Number(request.params.id)
-    // const ServiceId = listofservices.find((service)=>
-    //     service.id === serId
-    // )
-
-    // if(!ServiceId)
-    // {
-    //     response.send("Service not found")
-    // }
-    // else
-    // {
-    //     response.send(ServiceId.services)
-    // }
-    // response.send('This is service page')
-    response.send(request.service.services)
-})
+// serviceRouter.get('/:id([0-9]{1})',(request,response) =>{
+//     response.send(request.service.services)
+// })
 
 serviceRouter.param('id',(request,response,next,id) =>{
     request.service = listofservices[id-1]
     next() 
+})
+
+serviceRouter.get('/new',(request,response)=>{
+    response.render('users/new')
+})
+
+serviceRouter.post('/',(request,response)=>{
+    
+    //console.log(request.body.firstname)
+    listofservices.push({services:request.body.servicename})
+    response.redirect(`/service/${listofservices.length}`)
+})
+
+serviceRouter.get('/:id([0-9]{1})',(request,response)=>{
+    response.send(`${request.service.services} with id ${request.params.id} is cost of ${request.service.servicePrice} and it takes ${request.service.serviceTime} to complete`)
 })
 
 module.exports = serviceRouter;

@@ -8,6 +8,9 @@ const productRouter = require('./product')
 const serviceRouter = require('./service')
 const aboutRouter = require('./about')
 
+app.set('view engine','ejs')
+app.use(express.urlencoded({extended:true}))
+
 app.get('/',(request,response) => {
     response.send("Hello! have a nice day..!!")
 })
